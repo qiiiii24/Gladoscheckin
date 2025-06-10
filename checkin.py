@@ -52,60 +52,60 @@ if __name__ == '__main__':
             message_days = ""
             
             
-            if checkin.status_code == 200:
-                # 解析返回的json数据
-                result = checkin.json()     
-                # 获取签到结果
-                check_result = result.get('message')
-                points = result.get('points')
+    #         if checkin.status_code == 200:
+    #             # 解析返回的json数据
+    #             result = checkin.json()     
+    #             # 获取签到结果
+    #             check_result = result.get('message')
+    #             points = result.get('points')
 
-                # 获取账号当前状态
-                result = state.json()
-                # 获取剩余时间
-                # leftdays = int(float(result['data']['leftDays']))
-                # 获取账号email
-                email = result['data']['email']
+    #             # 获取账号当前状态
+    #             result = state.json()
+    #             # 获取剩余时间
+    #             leftdays = int(float(result['data']['leftDays']))
+    #             # 获取账号email
+    #             email = result['data']['email']
                 
-                print(check_result)
-                if "Checkin! Got" in check_result:
-                    success += 1
-                    message_status = "签到成功，会员点数 + " + str(points)
-                elif "Checkin Repeats!" in check_result:
-                    repeats += 1
-                    message_status = "重复签到，明天再来"
-                else:
-                    fail += 1
-                    message_status = "签到失败，请检查..."
+    #             print(check_result)
+    #             if "Checkin! Got" in check_result:
+    #                 success += 1
+    #                 message_status = "签到成功，会员点数 + " + str(points)
+    #             elif "Checkin Repeats!" in check_result:
+    #                 repeats += 1
+    #                 message_status = "重复签到，明天再来"
+    #             else:
+    #                 fail += 1
+    #                 message_status = "签到失败，请检查..."
 
-                if leftdays is not None:
-                    message_days = f"{leftdays} 天"
-                else:
-                    message_days = "error"
-            else:
-                email = ""
-                message_status = "签到请求URL失败, 请检查..."
-                message_days = "error"
+    #             if leftdays is not None:
+    #                 message_days = f"{leftdays} 天"
+    #             else:
+    #                 message_days = "error"
+    #         else:
+    #             email = ""
+    #             message_status = "签到请求URL失败, 请检查..."
+    #             message_days = "error"
 
-            context += "账号: " + email + ", P: " + str(points) +", 剩余: " + message_days + " | "
+    #         context += "账号: " + email + ", P: " + str(points) +", 剩余: " + message_days + " | "
 
-        # 推送内容 
-        # title = f'Glados, 成功{success},失败{fail},重复{repeats}'
-        title = message_status
-        print("Send Content:" + "\n", context)
+    #     # 推送内容 
+    #     # title = f'Glados, 成功{success},失败{fail},重复{repeats}'
+    #     title = message_status
+    #     print("Send Content:" + "\n", context)
         
-    else:
-        # 推送内容 
-        title = f'# 未找到 cookies!'
+    # else:
+    #     # 推送内容 
+    #     title = f'# 未找到 cookies!'
 
-    print("sckey:", sckey)
-    print("cookies:", cookies)
+    # print("sckey:", sckey)
+    # print("cookies:", cookies)
     
-    # 推送消息
-    # 未设置 sckey 则不进行推送
-    if not sckey:
-        print("Not push")
-    else:
-        send_wechat(sckey, title, context)
+    # # 推送消息
+    # # 未设置 sckey 则不进行推送
+    # if not sckey:
+    #     print("Not push")
+    # else:
+    #     send_wechat(sckey, title, context)
         # pushdeer = PushDeer(pushkey=sckey) 
         # pushdeer.send_text(title, desp=context)
 
